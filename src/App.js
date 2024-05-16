@@ -4,6 +4,19 @@ import NewFoodScreen from './components/NewFoodScreen';
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import {Box, Typography} from "@mui/material";
+import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
+import { prefixer } from 'stylis';
+import rtlPlugin from 'stylis-plugin-rtl';
+import createCache from '@emotion/cache';
+import { heIL } from '@mui/x-data-grid/locales';
+
+import { CacheProvider } from '@emotion/react';
+
+const cacheRtl = createCache({
+    key: 'main-app-rtl',
+    stylisPlugins: [prefixer, rtlPlugin],
+});
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,8 +33,17 @@ export const db = getFirestore(firebaseapp);
 
 const App = () => {
     const [foods, setFoods] = useState([]);
-    const [allfoods, setAllfoods] = useState([]);
+    const [allFoods, setAllFoods] = useState([]);
     const [points, setPoints] = useState(0);
+
+    const existingTheme = useTheme();
+    const theme = React.useMemo(
+        () =>
+            createTheme({}, heIL, existingTheme, {
+                direction: 'rtl',
+            }),
+        [existingTheme],
+    );
 
     useEffect(() => {
         const dbFoods = collection(db, "foodtracking");
@@ -48,7 +70,7 @@ const App = () => {
             .then((querySnapshot)=>{
                 const newData = querySnapshot.docs
                     .map((doc) => ({...doc.data(), id:doc.id }));
-                setAllfoods(newData);
+                setAllFoods(newData);
                 console.log(`Loaded old ${newData.length} items for autocomplete`);
             })
             .catch(console.error);
@@ -66,15 +88,33 @@ const App = () => {
             console.error("Error adding document: ", e);
         }
         setFoods([...foods, {...food, id: foods.length + 1}]);
-        setAllfoods([...allfoods, {...food, id: foods.length + 1}]);
+        setAllFoods([...allFoods, {...food, id: foods.length + 1}]);
         setPoints(points + food.totalPoints);
     };
 
     return (
-        <div>
-            <MainScreen points={points} foods={foods}/>
-            <NewFoodScreen addFood={addFood} allfoods={allfoods}/>
-        </div>
+        <CacheProvider value={cacheRtl}>
+            <ThemeProvider theme={theme}>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    bgcolor: 'background.default',
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    borderRadius: 2,
+                    overflow: 'clip',
+                    margin: '10px'
+                }}>
+                <div dir="rtl">
+                    <Typography variant="subtitle1">מעקב נקודות יומי</Typography>
+                    <MainScreen points={points} foods={foods}/>
+                    <NewFoodScreen addFood={addFood} allfoods={allFoods}/>
+                </div>
+            </Box>
+            </ThemeProvider>
+        </CacheProvider>
     );
 };
 

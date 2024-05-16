@@ -1,30 +1,42 @@
 import React from 'react';
-import {Card, CardContent, CardHeader, List, ListItem, ListItemIcon, ListItemText, Typography} from "@mui/material";
-import {Fastfood} from "@mui/icons-material";
+import {
+    Box,
+    Card,
+    CardContent,
+    CardHeader,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Typography
+} from "@mui/material";
 import {DataGrid} from "@mui/x-data-grid";
 
 const MainScreen = ({points, foods}) => {
     const cols = [
-        {field: "type", headerName: "Food"},
-        {field: "totalPoints", headerName: "Total Points"}
+        {field: "type", headerName: "מה אכלתי"},
+        {field: "totalPoints", headerName: "סה״כ נקודות"}
     ]
     return (
-        <div>
-            <Typography variant="h3">Food Points Tracker</Typography>
-            <Card variant="outlined" >
-                <CardHeader title={`Points for today: ${points}` }>
-                    <Typography variant="p">Points for today: {points}</Typography>
-                </CardHeader>
-                <CardContent>
-                    <DataGrid
-                        columns={cols}
-                        rows={foods}
-                        pagination={false}
-                        hideFooter={true}
-                    />
-                </CardContent>
-            </Card>
-        </div>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                alignItems: 'center',
+                bgcolor: 'background.default',
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: 2,
+                overflow: 'clip',
+                margin: '10px'
+            }}>
+            <Typography variant="subtitle2">סה:כ נקודות היום: {points}</Typography>
+            <DataGrid
+                columns={cols}
+                rows={foods}
+                hideFooter={true}
+            />
+        </Box>
     );
 };
 

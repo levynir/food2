@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import {Autocomplete, Button, Divider, TextField, Typography} from "@mui/material";
+import {Autocomplete, Box, Button, Divider, TextField, Typography} from "@mui/material";
 
 const NewFoodScreen = ({addFood, allfoods}) => {
     const [food, setFood] = useState({
         type: '',
-        points: 0,
-        amount: 0,
+        points: '',
+        amount: '',
     });
 
     const handleInputChange = (e) => {
@@ -32,7 +32,7 @@ const NewFoodScreen = ({addFood, allfoods}) => {
         // Call the addFood function to save the food item
         addFood({...food, totalPoints});
         // Reset form
-        setFood({type: '', points: 0, amount: 0});
+        setFood({type: '', points: '', amount: ''});
     };
     const uniqueTypes = (arr) => {
         let result = {};
@@ -43,39 +43,82 @@ const NewFoodScreen = ({addFood, allfoods}) => {
     }
     const uniquePoints = uniqueTypes(allfoods);
     return (
-        <div>
-            <Divider/>
-            <Typography variant="h3">New Food Entry</Typography>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                alignItems: 'center',
+                bgcolor: 'background.default',
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: 2,
+                overflow: 'clip',
+            }}>
+            <Typography variant="subtitle1">מה אכלתי עכשיו</Typography>
             <Autocomplete freeSolo
                           onChange={handleAutoCompleteChange}
                           name="autocomplete"
                           renderInput={((params) =>
-                              <TextField {...params} onChange={handleInputChange} name="type" label="Food"/>
+                              <TextField
+                                  {...params}
+                                  onChange={handleInputChange}
+                                  name="type"
+                                  label="אוכל"
+                                  type="text"
+                                  placeholder="שם האוכל"
+                                  sx={{
+                                      border: '1px solid',
+                                      borderColor: 'divider',
+                                      borderRadius: 2,
+                                      overflow: 'clip',
+                                      minWidth: '200px',
+                                  }}
+                              />
                           )}
-                          options={uniquePoints.map((food) => food.type)}/>
+                          options={uniquePoints.map((food) => food.type)}
+                          sx={{
+                              margin: '5px',
+                              border: '1px solid',
+                              borderColor: 'divider',
+                              borderRadius: 2,
+                              overflow: 'clip',
+                          }}/>
 
             <TextField
-                label="Points"
+                label="נקודות"
                 type="number"
                 name="points"
-                placeholder="Points"
+                placeholder="נקודות"
                 value={food.points}
                 onChange={handleInputChange}
+                sx={{
+                    margin: '5px',
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    borderRadius: 2,
+                    overflow: 'clip',
+                    minWidth: '200px',
+                }}
             />
-            <br/>
             <TextField
-                label="Amount"
+                label="כמות"
                 type="number"
                 name="amount"
-                placeholder="Amount (0.5 to 500)"
+                placeholder="כמות"
                 value={food.amount}
                 onChange={handleInputChange}
+                sx={{
+                    margin: '5px',
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    borderRadius: 2,
+                    overflow: 'clip',
+                    minWidth: '200px',
+                }}
             />
-            <br/>
-            <Typography variant="h5">Total Points: {food.points * food.amount}</Typography>
-            <br/>
-            <Button variant="contained" onClick={handleAddFood}>Add Food</Button>
-        </div>
+            <Typography variant="subtitle2">סה״כ: {food.points * food.amount}</Typography>
+            <Button variant="contained" onClick={handleAddFood}>הוספה</Button>
+        </Box>
     );
 };
 
