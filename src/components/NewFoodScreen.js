@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Autocomplete, Box, Button, Divider, TextField, Typography} from "@mui/material";
+import {Autocomplete, Box, Button, TextField, Typography} from "@mui/material";
 
 const NewFoodScreen = ({addFood, allfoods}) => {
     const [food, setFood] = useState({
@@ -58,7 +58,7 @@ const NewFoodScreen = ({addFood, allfoods}) => {
             <Autocomplete freeSolo
                           onChange={handleAutoCompleteChange}
                           name="autocomplete"
-                          renderInput={((params) =>
+                          renderInput={(params) =>
                               <TextField
                                   {...params}
                                   onChange={handleInputChange}
@@ -73,8 +73,7 @@ const NewFoodScreen = ({addFood, allfoods}) => {
                                       overflow: 'clip',
                                       minWidth: '200px',
                                   }}
-                              />
-                          )}
+                              />}
                           options={uniquePoints.map((food) => food.type)}
                           sx={{
                               margin: '5px',

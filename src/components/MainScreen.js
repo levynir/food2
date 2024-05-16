@@ -1,15 +1,5 @@
 import React from 'react';
-import {
-    Box,
-    Card,
-    CardContent,
-    CardHeader,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Typography
-} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import {DataGrid} from "@mui/x-data-grid";
 
 const MainScreen = ({points, foods}) => {

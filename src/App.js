@@ -1,17 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import MainScreen from './components/MainScreen';
 import NewFoodScreen from './components/NewFoodScreen';
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import {initializeApp} from "firebase/app";
+import {addDoc, collection, getDocs, getFirestore, query, where} from "firebase/firestore";
 import {Box, Typography} from "@mui/material";
-import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
-import { prefixer } from 'stylis';
+import {createTheme, ThemeProvider, useTheme} from '@mui/material/styles';
+import {prefixer} from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
 import createCache from '@emotion/cache';
-import { heIL } from '@mui/x-data-grid/locales';
+import {heIL} from '@mui/x-data-grid/locales';
 
-import { CacheProvider } from '@emotion/react';
+import {CacheProvider} from '@emotion/react';
 
 const cacheRtl = createCache({
     key: 'main-app-rtl',
