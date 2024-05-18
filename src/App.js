@@ -51,7 +51,6 @@ const App = () => {
                 where("date",
                     ">=",
                     new Date(`${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`)));
-        console.log(q);
         getDocs(q)
             .then((querySnapshot)=>{
                 const newData = querySnapshot.docs
