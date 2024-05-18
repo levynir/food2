@@ -50,7 +50,7 @@ const App = () => {
             query(dbFoods,
                 where("date",
                     ">=",
-                    new Date(`${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`)));
+                    new Date(`${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`)));
         getDocs(q)
             .then((querySnapshot)=>{
                 const newData = querySnapshot.docs
